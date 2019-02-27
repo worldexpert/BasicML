@@ -12,6 +12,8 @@ predict_y_data = [op(x) for x in valid_x]
 
 print(x_data)
 print(ground_y_data)
+#x_data = [-5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0]
+#ground_y_data = [-0.65, -0.2, 0.6, 0.75, 1.35, 1.95, 2.5, 2.8, 3.65, 3.75]
 
 W1 = tf.Variable(tf.random_uniform([1], -10.0, 10.0))
 W2 = tf.Variable(tf.random_uniform([1], -10.0, 10.0))
