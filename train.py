@@ -14,17 +14,16 @@ print(x_data)
 print(ground_y_data)
 #x_data = [-5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0]
 #ground_y_data = [-0.65, -0.2, 0.6, 0.75, 1.35, 1.95, 2.5, 2.8, 3.65, 3.75]
-
+'''
 W1 = tf.Variable(tf.random_uniform([1], -10.0, 10.0))
 W2 = tf.Variable(tf.random_uniform([1], -10.0, 10.0))
 W3 = tf.Variable(tf.random_uniform([1], -10.0, 10.0))
 B = tf.Variable(tf.random_uniform([1], -10.0, 10.0))
 
+
 feedX = tf.placeholder(tf.float32)
 feedY = tf.placeholder(tf.float32)
-
 predic = W1 * feedX * feedX * feedX + W2 * feedX * feedX + W3 * feedX + B
-
 cost = tf.reduce_mean(tf.square(feedY - predic))
 opt = tf.train.AdamOptimizer(learning_rate=0.1).minimize(cost)
 
@@ -38,9 +37,23 @@ with tf.Session() as sess:
 	print(sess.run(B))
 	result = sess.run(predic, feed_dict={feedX:valid_x})
 
-
 plt.scatter(x_data, ground_y_data)
 plt.plot(valid_x, predict_y_data, c= 'red')
 plt.plot(valid_x, result, c= 'black')
 plt.show()
+
+'''
+l0 = tf.keras.layers.Dense(units=4, input_shape=[1])
+l1 = tf.keras.layers.Dense(units=4)
+l2 = tf.keras.layers.Dense(units=1)
+model = tf.keras.Sequential([l0, l1, l2])
+model.compile(loss='mean_squared_error', optimizer=tf.keras.optimizers.Adam(0.1))
+model.fit(x_data, ground_y_data, epochs=2000, verbose=False)
+
+plt.scatter(x_data, ground_y_data)
+plt.plot(valid_x, predict_y_data, c= 'red')
+plt.plot(valid_x, model.predict(valid_x), c= 'black')
+plt.show()
+
+
 
